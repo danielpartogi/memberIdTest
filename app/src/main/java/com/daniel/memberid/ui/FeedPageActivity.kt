@@ -19,8 +19,10 @@ import com.daniel.memberid.viewModel.FeedPageViewModel
 import kotlinx.android.synthetic.main.content_feed_page.*
 import android.content.Intent
 import android.util.Log
+import android.view.View
 import com.daniel.memberid.SharedPreference
 import com.daniel.memberid.ui.adapter.FeedPagePagination
+import kotlinx.android.synthetic.main.item_data_loading.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -100,6 +102,7 @@ class FeedPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
             override fun loadMoreItems() {
                 isLoading = true
+                progress_bar_item_data_loading.visibility = View.VISIBLE
                 getMoreItem()
             }
         })
@@ -114,6 +117,7 @@ class FeedPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             Log.d("Simulation", "end of simulation")
             adapter?.addData(data)
             isLoading = false
+            progress_bar_item_data_loading.visibility = View.GONE
         }
     }
 
@@ -167,6 +171,11 @@ class FeedPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 poin = data?.getIntExtra("poin", 10000)
                 typeArray = data?.getStringArrayExtra("type")
                 viewModel.setFilter(poin, typeArray?.toMutableList())
+            }
+            else if(resultCode == Activity.RESULT_FIRST_USER) {
+                poin = data?.getIntExtra("poin", 10000)
+                typeArray = data?.getStringArrayExtra("type")
+                viewModel.resetFilter()
             }
         }
     }

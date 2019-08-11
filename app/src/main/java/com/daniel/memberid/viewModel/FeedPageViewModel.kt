@@ -97,17 +97,20 @@ class FeedPageViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun setFilter(poin:Int?, filterType:MutableList<String>?){
+        var data = awardList.value?.toMutableList()
+
         if(poin!=null && poin>10000){
-            awardList.value = awardList.value?.filter { it.poinNeeded<=poin }?.toMutableList()
-            awardListFiltered = awardList
+            data = data?.filter { it.poinNeeded<=poin }?.toMutableList()
         }
         if(filterType!=null && filterType.count()>0){
-            awardList.value =  awardList.value?.filter { filterType.contains(it.awardsType) }?.toMutableList()
-            awardListFiltered = awardList
+            data =  data?.filter { filterType.contains(it.awardsType) }?.toMutableList()
         }
-        if(filterType?.count()==0 && poin==10000){
-            awardListFiltered = awardList
-        }
+
+        awardListFiltered.value = data
+    }
+
+    fun resetFilter(){
+        awardListFiltered.value = awardList.value
     }
 
 }

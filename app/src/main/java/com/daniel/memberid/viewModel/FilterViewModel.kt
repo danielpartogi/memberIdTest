@@ -22,19 +22,23 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     val isFilterExist : ObservableBoolean = ObservableBoolean(false)
     val isPoinVisible: ObservableBoolean = ObservableBoolean(false)
     val isPoinChanged: MutableLiveData<Boolean> = MutableLiveData()
+    val isClearFilter: MutableLiveData<Boolean> = MutableLiveData()
     val resetsPoin : MutableLiveData<Boolean> = MutableLiveData()
+    val isClearType : MutableLiveData<Boolean> = MutableLiveData()
     val filtered : MutableLiveData<Boolean> = MutableLiveData()
     val currentTypeArrayString = emptyArray<String>().toMutableList()
     private var allTypeTrigger: Boolean = false
     private var cancelTypeTrigger :Boolean =false
     var currentPoin : Int =  0
-    var feedTrigger : Boolean = false
+    private var feedTrigger : Boolean = false
 
 
     init {
         filtered.value = false
+        isClearFilter.value = false
         resetsPoin.value = false
         isPoinChanged.value = false
+        isClearType.value = false
     }
 
     fun resetPoin(){
@@ -49,7 +53,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         currentPoinStringRange.set("Poin 10000 - $poin")
         currentPoin = poin
         if(i>1){
-            isFilterExist.set(true)
+            isFilterExist.set(currentTypeArrayString.count()>0 && currentPoin>10000)
             isPoinVisible.set(true)
         }
     }
@@ -130,6 +134,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         productsChecked.set(false)
         othersChecked.set(false)
         cancelTypeTrigger =true
+        isClearType.value = true
 
     }
 
@@ -145,6 +150,8 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
            resetPoin()
        }
         isFilterExist.set(false)
+        isClearFilter.value = true
+
     }
 
     fun setPoinAndType(poin:Int?, type: Array<String>?){
@@ -171,7 +178,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     private fun setCurrentType(){
             currentType.set(currentTypeArrayString.joinToString())
 
-        isFilterExist.set(currentTypeArrayString.count()>0 || currentPoin>10000)
+        isFilterExist.set(currentTypeArrayString.count()>0 && currentPoin>10000)
         isTypeVisible.set(currentTypeArrayString.count()>0)
         cancelTypeTrigger = false
 

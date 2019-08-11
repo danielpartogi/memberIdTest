@@ -67,13 +67,18 @@ class FilterActivity : AppCompatActivity() {
 
 
         viewModel.resetsPoin.observe(this, Observer {
-            if(it){
-               binding.seekBar.progress = 1
+            if(it && !viewModel.isClearFilter.value!!){
+                binding.seekBar.progress = 1
+                val data = Intent()
+                data.putExtra("poin", 10000)
+                data.putExtra("type", viewModel.currentTypeArrayString.toTypedArray())
+                setResult(Activity.RESULT_OK, data)
+                finish()
             }
         })
 
         viewModel.filtered.observe(this, Observer {
-           if(it){
+           if(it && !viewModel.isClearFilter.value!!){
                val data = Intent()
                data.putExtra("poin", viewModel.currentPoin)
                data.putExtra("type", viewModel.currentTypeArrayString.toTypedArray())
@@ -81,10 +86,29 @@ class FilterActivity : AppCompatActivity() {
                finish()
            }
         })
+        viewModel.isClearFilter.observe(this, Observer {
+            if(it){
+                val data = Intent()
+                data.putExtra("poin", 10000)
+                data.putExtra("type", emptyList<String>().toTypedArray())
+                setResult(Activity.RESULT_FIRST_USER, data)
+                finish()
+            }
+        })
 
         viewModel.isPoinChanged.observe(this, Observer {
             if(it){
                 binding.seekBar.progress = viewModel.currentPoin/10000
+            }
+        })
+
+        viewModel.isClearType.observe(this, Observer {
+            if(it){
+                val data = Intent()
+                data.putExtra("poin", viewModel.currentPoin)
+                data.putExtra("type", emptyList<String>().toTypedArray())
+                setResult(Activity.RESULT_OK, data)
+                finish()
             }
         })
     }
