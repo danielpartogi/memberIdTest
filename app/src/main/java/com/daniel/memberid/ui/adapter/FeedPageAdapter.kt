@@ -15,7 +15,6 @@ import com.daniel.memberid.databinding.ItemDataLoadingBinding
 import com.daniel.memberid.databinding.ItemFeedPageBinding
 import com.daniel.memberid.model.AwardsModel
 import com.squareup.picasso.Picasso
-import java.lang.StringBuilder
 import java.text.NumberFormat
 import java.util.*
 
