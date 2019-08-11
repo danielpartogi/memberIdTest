@@ -24,7 +24,7 @@
     <string name="others">Others</string>
     <string name="products">Products</string>
     <string name="vouchers">Vouchers</string>
-    <string name="cancel">cancel</string>
+    <string name="cancel">Cancel</string>
     <string name="clear_all_filter">Clear All Filter</string>
     <string name="poin_needed">Poin Needed</string>
     <string name="_10_000">10.000</string>
@@ -38,4 +38,5 @@
     <string name="sign_in">Sign In</string>
     <string name="awards">Awards</string>
     <string name="awards_menu">Awards Menu</string>
+    <string name="images">images</string>
 </resources>

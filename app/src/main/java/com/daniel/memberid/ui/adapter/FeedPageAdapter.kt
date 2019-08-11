@@ -1,9 +1,12 @@
 package com.daniel.memberid.ui.adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.daniel.memberid.CommonsCons
@@ -11,19 +14,32 @@ import com.daniel.memberid.R
 import com.daniel.memberid.databinding.ItemDataLoadingBinding
 import com.daniel.memberid.databinding.ItemFeedPageBinding
 import com.daniel.memberid.model.AwardsModel
+import com.squareup.picasso.Picasso
+import java.lang.StringBuilder
 import java.text.NumberFormat
 import java.util.*
 
 
 
 
-class FeedPageAdapter: RecyclerView.Adapter<FeedPageAdapter.FeedPageViewHolder>() {
+class FeedPageAdapter(context:Context): RecyclerView.Adapter<FeedPageAdapter.FeedPageViewHolder>() {
 
     private var awards = emptyList<AwardsModel>().toMutableList()
+    private val width:Int
+    private val height:Int
+    init {
+        val displayMetrics = DisplayMetrics()
+        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        wm.defaultDisplay.getMetrics(displayMetrics)
+
+        width = (displayMetrics.widthPixels * 1)
+        height = (displayMetrics.heightPixels *  0.25).toInt()
+    }
 
     companion object{
         private const val ITEM_VIEW_TYPE_CONTENT = 1
         private const val ITEM_VIEW_TYPE_LOADING = 2
+
 
     }
 
@@ -53,6 +69,7 @@ class FeedPageAdapter: RecyclerView.Adapter<FeedPageAdapter.FeedPageViewHolder>(
         if(position>=awards.count()){
 
         } else {
+
             holder.setData(awards[position])
         }
     }
@@ -70,6 +87,7 @@ class FeedPageAdapter: RecyclerView.Adapter<FeedPageAdapter.FeedPageViewHolder>(
 
         private var loadingBinding: ItemDataLoadingBinding? = null
         private var feedBinding: ItemFeedPageBinding? = null
+        val picasso = Picasso.get()
 
         constructor(feedBinding: ItemFeedPageBinding) : super(feedBinding.root) {
             this.feedBinding = feedBinding
@@ -80,8 +98,14 @@ class FeedPageAdapter: RecyclerView.Adapter<FeedPageAdapter.FeedPageViewHolder>(
             this.loadingBinding = loadingBinding
         }
 
+
         @SuppressLint("SetTextI18n")
         fun setData(award: AwardsModel?) {
+            //sorry for this, i used same image.
+            picasso.load("https://loremflickr.com/320/240")
+                .resize(width, height)
+                .placeholder(R.mipmap.src_init)
+                .into(feedBinding?.imageView3)
 
             when(award?.awardsType){
                 CommonsCons.AWARD_TYPE_PRODUCTS -> feedBinding?.cardViewItemType?.setCardBackgroundColor(Color.parseColor("#FF4500"))

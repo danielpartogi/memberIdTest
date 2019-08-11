@@ -60,7 +60,7 @@ class FeedPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         linearLayoutManager = LinearLayoutManager(this)
         viewModel = ViewModelProviders.of(this).get(FeedPageViewModel::class.java)
-        adapter = FeedPageAdapter()
+        adapter = FeedPageAdapter(this)
         recycler_feed_page.layoutManager = linearLayoutManager
         recycler_feed_page.adapter = adapter
 
