@@ -11,17 +11,17 @@ import kotlinx.coroutines.withContext
 class FeedPageViewModel(application: Application) : AndroidViewModel(application) {
 
     val awardList = MutableLiveData<MutableList<AwardsModel>>()
-    val awardListFiltered = MutableLiveData<List<AwardsModel>>()
-    var logouted = MutableLiveData<Boolean>()
+    var awardListFiltered = MutableLiveData<MutableList<AwardsModel>>()
+    var logout = MutableLiveData<Boolean>()
 
     init {
-        logouted.value = false
+        logout.value = false
         awardList.value = emptyList<AwardsModel>().toMutableList()
     }
 
     suspend fun addAward(typeArray: MutableList<String>?, poin: Int?) :List<AwardsModel>{
        return withContext(Dispatchers.IO){
-           val awards =  emptyList<AwardsModel>().toMutableList()
+           var awards =  emptyList<AwardsModel>().toMutableList()
            awards.add(
                AwardsModel(CommonsCons.AWARD_TYPE_GIFTCARDS, 50000, "GIFT CARD IDR 500.000")
            )
@@ -32,7 +32,7 @@ class FeedPageViewModel(application: Application) : AndroidViewModel(application
                AwardsModel(CommonsCons.AWARD_TYPE_PRODUCTS, 700000, "iphone 5")
            )
            awards.add(
-               AwardsModel(CommonsCons.AWARD_TYPE_PRODUCTS, 3000000, "iphone 8")
+               AwardsModel(CommonsCons.AWARD_TYPE_PRODUCTS, 1000000, "iphone 8 replica")
            )
            awards.add(
                AwardsModel(CommonsCons.AWARD_TYPE_VOUCHERS, 800000, "Discount 50% Iphone")
@@ -44,16 +44,16 @@ class FeedPageViewModel(application: Application) : AndroidViewModel(application
                AwardsModel(CommonsCons.AWARD_TYPE_VOUCHERS, 500000, "Discount 70% Samsung")
            )
            if(poin!=null && poin>10000 ){
-               awardList.value?.addAll(awards.filter{ it.poinNeeded<=poin}.toList())
-               awards.filter { it.poinNeeded<=poin}
+               awards = awards.filter { it.poinNeeded<=poin}.toMutableList()
+               awardList.value?.addAll(awards)
            }
            if(typeArray!=null && typeArray.count()>0 ){
-               awardList.value?.addAll(awards.filter{ typeArray.contains(it.awardsType)}.toList())
-               awards.filter { typeArray.contains(it.awardsType)}
-           } else {
+               awards = awards.filter { typeArray.contains(it.awardsType)}.toMutableList()
                awardList.value?.addAll(awards)
-               awards
+
            }
+           awardList.value?.addAll(awards)
+           awards
        }
     }
 
@@ -77,7 +77,7 @@ class FeedPageViewModel(application: Application) : AndroidViewModel(application
             AwardsModel(CommonsCons.AWARD_TYPE_PRODUCTS, 700000, "iphone 5")
         )
         awards.add(
-            AwardsModel(CommonsCons.AWARD_TYPE_PRODUCTS, 3000000, "iphone 8")
+            AwardsModel(CommonsCons.AWARD_TYPE_PRODUCTS, 1000000, "iphone 8 replica")
         )
         awards.add(
             AwardsModel(CommonsCons.AWARD_TYPE_VOUCHERS, 800000, "Discount 50% Iphone")
@@ -93,18 +93,20 @@ class FeedPageViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun logout(){
-        logouted.value = true
+        logout.value = true
     }
 
     fun setFilter(poin:Int?, filterType:MutableList<String>?){
         if(poin!=null && poin>10000){
-            awardListFiltered.value = awardList.value?.filter { it.poinNeeded<=poin }
+            awardList.value = awardList.value?.filter { it.poinNeeded<=poin }?.toMutableList()
+            awardListFiltered = awardList
         }
         if(filterType!=null && filterType.count()>0){
-            awardListFiltered.value = awardList.value?.filter { filterType.contains(it.awardsType) }
+            awardList.value =  awardList.value?.filter { filterType.contains(it.awardsType) }?.toMutableList()
+            awardListFiltered = awardList
         }
         if(filterType?.count()==0 && poin==10000){
-            awardListFiltered.value = awardList.value
+            awardListFiltered = awardList
         }
     }
 

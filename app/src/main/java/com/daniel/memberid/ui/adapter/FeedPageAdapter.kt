@@ -21,9 +21,11 @@ class FeedPageAdapter: RecyclerView.Adapter<FeedPageAdapter.FeedPageViewHolder>(
 
     private var awards = emptyList<AwardsModel>().toMutableList()
 
-    private val ITEM_VIEW_TYPE_CONTENT = 1
-    private val ITEM_VIEW_TYPE_LOADING = 2
+    companion object{
+        private const val ITEM_VIEW_TYPE_CONTENT = 1
+        private const val ITEM_VIEW_TYPE_LOADING = 2
 
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedPageViewHolder {
 
@@ -78,6 +80,7 @@ class FeedPageAdapter: RecyclerView.Adapter<FeedPageAdapter.FeedPageViewHolder>(
             this.loadingBinding = loadingBinding
         }
 
+        @SuppressLint("SetTextI18n")
         fun setData(award: AwardsModel?) {
 
             when(award?.awardsType){

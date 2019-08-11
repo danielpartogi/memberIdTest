@@ -25,7 +25,7 @@ class WelcomePageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_welcome_page)
 
         val sharedPreference = SharedPreference(this)
-        if(sharedPreference.is_login){
+        if(sharedPreference.isLogin){
             gotoFeedPage()
         }
 
@@ -37,7 +37,7 @@ class WelcomePageActivity : AppCompatActivity() {
         viewModel.error.observe(this, Observer {
             if(!it){
                 gotoFeedPage()
-                sharedPreference.createSessionBoolean("is_login", true)
+                sharedPreference.setLoggedIn()
             }
         })
 

@@ -70,7 +70,7 @@ class FeedPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             }
         })
 
-        viewModel.logouted.observe(this, Observer {
+        viewModel.logout.observe(this, Observer {
             if(it){
                 SharedPreference(this).logout()
                 val int = Intent(this, WelcomePageActivity::class.java)

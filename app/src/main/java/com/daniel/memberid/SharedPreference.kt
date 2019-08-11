@@ -7,16 +7,20 @@ class SharedPreference(_context: Context) {
     private var preferences: SharedPreferences
     private var editor: SharedPreferences.Editor
 
-    private var PRIVATE_MODE = 0
-    private val PREF_NAME = "member"
+   companion object{
+       private const val PRIVATE_MODE = 0
+       private const val PREF_NAME = "member"
 
-    val is_login: Boolean
-        get() = preferences.getBoolean("is_login", false)
 
+   }
+
+    val isLogin: Boolean
+        get() = preferences.getBoolean("isLogin", false)
 
     init {
         preferences = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         editor = preferences.edit()
+        editor.apply()
     }
 
     fun createSessionBoolean(name: String, status: Boolean) {
@@ -25,12 +29,12 @@ class SharedPreference(_context: Context) {
     }
 
     fun logout() {
-        editor.remove("is_login")
+        editor.remove("isLogin")
         editor.commit()
     }
 
     fun setLoggedIn() {
-        createSessionBoolean("is_login", true)
+        createSessionBoolean("isLogin", true)
     }
 
 
