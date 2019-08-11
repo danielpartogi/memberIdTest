@@ -39,5 +39,5 @@
     <string name="awards">Awards</string>
     <string name="awards_menu">Awards Menu</string>
     <string name="images">images</string>
-    <string name="not_registered_email">your email is not registered</string>
+    <string name="not_registered_email">Email Address is not exists</string>
 </resources>
