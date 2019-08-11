@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+    <data>
+        <import type="android.view.View" />
+        <variable name="viewModel" type="com.daniel.memberid.viewModel.FilterViewModel"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:background="#FFFFFF">
+
+        <CheckBox
+                android:text="@string/vouchers"
+                android:checked="@={viewModel.voucherChecked}"
+                android:onCheckedChanged="@{()->viewModel.voucherChanged()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/voucher_checkbox"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/all_type_checkbox"/>
+        <CheckBox
+                android:text="@string/products"
+
+                android:checked="@={viewModel.productsChecked}"
+                android:onCheckedChanged="@{()->viewModel.productsChanged()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/products_checkbox"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/voucher_checkbox"/>
+        <CheckBox
+                android:text="@string/others"
+                android:checked="@={viewModel.othersChecked}"
+                android:onCheckedChanged="@{()->viewModel.othersChanged()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/others_checkbox"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/products_checkbox"/>
+        <com.google.android.material.appbar.AppBarLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                app:elevation="0dp"
+                android:theme="@style/AppTheme" android:background="#FFFFFF"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/appBarLayout">
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/filter_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+
+                    android:background="#FFFFFF"
+                    app:popupTheme="@style/AppTheme.PopupOverlay">
+                <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                                   android:layout_height="match_parent">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                              android:text="@string/filter" android:textSize="24sp" android:textStyle="bold"
+                              android:textColor="#000000" app:layout_constraintTop_toTopOf="parent"
+                              android:layout_marginTop="8dp" app:layout_constraintStart_toStartOf="parent"
+                              android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:src="@drawable/ic_close_black_24dp"
+                            android:id="@+id/close_image" android:layout_marginBottom="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
+                            app:layout_constraintTop_toTopOf="parent" android:clickable="true"
+                            android:focusable="true" android:contentDescription="@string/close"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:visibility="@{viewModel.isTypeVisible ? View.VISIBLE : View.GONE}"
+                android:layout_height="0dp"
+                android:id="@+id/constraintLayout" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0" android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/custom_background" app:layout_constraintHeight_percent="0.05">
+
+            <TextView
+                    android:text="@={viewModel.currentType}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/type_text"
+                    app:layout_constraintVertical_bias="1.0" android:layout_marginStart="8dp"
+                    android:textColor="#3377FF"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:src="@drawable/ic_cancel_black_24dp"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:onClick="@{()-> viewModel.cancelType()}"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/cancel_type_button" app:layout_constraintStart_toEndOf="@+id/type_text"
+                    android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.0"
+                    android:focusable="true" android:contentDescription="@string/cancel"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:visibility="@{viewModel.isPoinVisible ? View.VISIBLE : View.GONE}"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/appBarLayout" android:id="@+id/constraintLayout2"
+                android:background="@drawable/custom_background" app:layout_constraintHeight_percent="0.05">
+
+            <TextView
+                    android:text="@={viewModel.currentPoinStringRange}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/poin_text"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" android:textColor="#3377FF"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:clickable="true"
+                    android:onClick="@{()->viewModel.resetPoin()}"
+                    android:layout_height="wrap_content" android:src="@drawable/ic_cancel_black_24dp"
+                    android:id="@+id/cancel_poin_button" android:background="@null"
+                    app:layout_constraintStart_toEndOf="@+id/poin_text" android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:focusable="true"
+                    android:contentDescription="@string/cancel"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:clickable="true"
+                android:visibility="@{viewModel.isFilterExist ? View.VISIBLE : View.GONE}"
+                android:onClick="@{()-> viewModel.clearFilter()}"
+                android:layout_height="0dp"
+                android:id="@+id/clear_filter" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0" android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/custom_background" app:layout_constraintHeight_percent="0.05"
+                android:focusable="true">
+
+            <TextView
+                    android:text="@string/clear_all_filter"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+
+                    app:layout_constraintVertical_bias="1.0" android:layout_marginStart="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    android:textColor="#3377FF"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <SeekBar
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/seekBar" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" android:layout_marginTop="16dp"/>
+        <TextView
+                android:text="@string/poin_needed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView5"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp" android:textSize="14sp" android:textStyle="bold"
+                android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/clear_filter"/>
+        <TextView
+                android:text="@string/_10_000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView6"
+                app:layout_constraintTop_toBottomOf="@+id/textView5" android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp" android:textStyle="bold"
+                android:textColor="#3377FF"/>
+        <TextView
+                android:text="@={viewModel.currentPoinString}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView7" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+                app:layout_constraintStart_toEndOf="@+id/textView6" android:layout_marginStart="8dp"
+                app:layout_constraintHorizontal_bias="1.0" android:textColor="#3377FF" android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/seekBar" android:layout_marginBottom="16dp"/>
+        <TextView
+                android:text="@string/awards_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView8" android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/seekBar" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+        />
+        <CheckBox
+                android:text="@string/all_type"
+                android:checked="@={viewModel.allTypeChecked}"
+                android:onCheckedChanged="@{()->viewModel.allTypeChanged()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/all_type_checkbox" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView8" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"/>
+        <Button
+                android:text="@string/filter"
+                android:onClick="@{()->viewModel.filter()}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/filter_button" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp" android:clickable="true" android:textAllCaps="false"
+                android:focusable="true"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

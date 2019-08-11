@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+    <data>
+        <variable name="viewModel" type="com.daniel.memberid.viewModel.WelcomePageViewModel"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:background="#FFFFFF">
+        <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp" app:srcCompat="@drawable/ic_star"
+                android:id="@+id/imageView2" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                app:layout_constraintHorizontal_bias="0.497" app:layout_constraintWidth_percent="0.30"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintBottom_toTopOf="@+id/textView" android:contentDescription="@string/star"/>
+        <TextView
+                android:text="@string/award"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:textAllCaps="true"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="36sp" android:textStyle="bold" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView2"
+        />
+        <TextView
+                android:text="@string/enter_your_email_address_to_sign_in_and_continue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="18sp"
+                android:gravity="center" app:layout_constraintWidth_percent="0.5" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/textInputLayout"/>
+        <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="32dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="32dp" android:id="@+id/textInputLayout" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/button">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.email}"
+                    android:hint="@string/email_address" android:singleLine="true" android:id="@+id/text_input"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+                android:text="@string/sign_in"
+                android:layout_width="0dp"
+                android:onClick="@{()->viewModel.login()}"
+                android:layout_height="wrap_content"
+                android:id="@+id/button" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+                app:layout_constraintWidth_percent="0.4"
+                android:layout_marginBottom="130dp"
+                app:layout_constraintBottom_toBottomOf="parent" android:textAllCaps="false"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
